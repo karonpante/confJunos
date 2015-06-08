@@ -1,0 +1,58 @@
+{% extends "template.xhtml" %}
+{% block content %}
+    <form action="" method="post" name="frm_Vlans">
+        <div>
+            <label for="dc">Select Datacenter: </label>
+            <select id="dc" name="select_dc">
+                <option name="opt_d00">D00/Brussel</option>
+                <option name="opt_d16">D16/Amsterdam</option>
+            </select>
+        </div>
+        <p></p>
+        <div>
+            <label for="vlans">Existing VLANS: </label><br/>
+            <select id="vlans" class="list" size="5" onclick="getVlan()">
+                {% for vlan in vlans %}
+                    <option class="listItem" value="{{ vlan.id }}">
+                        {{ vlan.id }}
+                        {{ vlan.vlan }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <table>
+                <tr>
+                    <td><label for="vlans_id">VLAN ID</label></td>
+                    <td><input id="vlans_id" name="vlans_id" type="text"></input></td>
+                </tr>
+                <tr>
+                    <td><label for="vlans_desc">VLAN Description</label></td>
+                    <td><input id="vlans_desc" name="vlans_description" type="text"></input>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <button type="submit" name="btn_vlans" value="vlanadd" class="button">Add VLAN</button>
+            <button type="submit" name="btn_vlans" value="vlanedit" class="button">Edit VLAN</button>
+            <button type="submit" name="btn_vlans" value="vlanremove" class="button">Remove VLAN</button>
+        </div>
+        <p></p>
+        <p></p>
+        <div>
+            <button type="submit" name="btn_vlans" value="check" class="button">Check switches</button><br/>
+            <label for="vlans_switch">VLANS on switch</label><br/>
+            <textarea id="vlans_switch" name="vlans_switch">{{ devvlans }} {{ devgroups }}</textarea>
+        </div>
+        <p></p>
+        <script language="javascript" type="text/javascript">
+            function getVlan() {
+                var element = document.getElementById("vlans");
+                var text = element.options[element.selectedIndex].value;
+                document.getElementById("vlans_id").value = text;
+            }
+        </script>
+    </form>
+
+{% endblock %}
